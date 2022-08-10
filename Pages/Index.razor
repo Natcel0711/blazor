@@ -3,6 +3,7 @@
 
 @inject services.ProductServices service
 @using Microsoft.EntityFrameworkCore
+@inject DialogService DialogService
 
 <h1>CRUD app made in Blazor</h1>
 
@@ -24,7 +25,7 @@
             <Template Context="prod">
                 <RadzenButton Click=@(args => OnClick("Primary icon button")) Icon="edit"
                     ButtonStyle="ButtonStyle.Info" />
-                <RadzenButton Click=@(args => OnClick("Secondary icon button")) Icon="delete"
+                <RadzenButton Click=@(args => DeleteProduct(@prod)) Icon="delete"
                     ButtonStyle="ButtonStyle.Secondary" />
             </Template>
         </RadzenDataGridColumn>

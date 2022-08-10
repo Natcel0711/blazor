@@ -2,6 +2,7 @@ using blazor.Data;
 using blazor;
 using blazor.services;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<DialogService>();
 builder.Services.AddDbContext<ProductDBContext>(options =>
 {
     options.UseSqlite("Data Source = Products.db");
