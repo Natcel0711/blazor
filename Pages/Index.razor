@@ -1,0 +1,76 @@
+﻿@page "/"
+@using models
+
+@inject services.ProductServices service
+@using Microsoft.EntityFrameworkCore
+
+<h1>CRUD app made in Blazor</h1>
+
+<RadzenButton Click=@(args => OnClick("Primary button with text and icon")) Text="Add New" Icon="add_circle_outline"
+    ButtonStyle="ButtonStyle.Primary" class="m-2" style="background-color: rgb(64 64 64);" />
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true"
+    PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+    Data="@products" TItem="Product" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="Product" Property="ID" Filterable="false" Title="ID" Frozen="true" Width="70px"
+            TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="Product" Property="Name" Title="First Name" Width="140px" />
+        <RadzenDataGridColumn TItem="Product" Property="Price" Title="Last Name" Width="140px" />
+        <RadzenDataGridColumn TItem="Product" Property="Description" Title="Job Title" Width="200px" />
+        <RadzenDataGridColumn TItem="Product" Property="Quantity" Title="Quantity" Width="100px" />
+        <RadzenDataGridColumn TItem="Product" Context="Sample" Title="View" Sortable="false" Filterable="false"
+            TextAlign="TextAlign.Center" Width="5rem">
+            <Template Context="prod">
+                <RadzenButton Click=@(args => OnClick("Primary icon button")) Icon="edit"
+                    ButtonStyle="ButtonStyle.Info" />
+                <RadzenButton Click=@(args => OnClick("Secondary icon button")) Icon="delete"
+                    ButtonStyle="ButtonStyle.Secondary" />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    IEnumerable<Product>? products;
+    List<Product> Products = new List<Product>();
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshProducts();
+    }
+
+    public void OnClick(string c)
+    {
+
+    }
+    private async Task RefreshProducts()
+    {
+        products = await service.GetProductAsync();
+    }
+
+    public Product NewProduct { get; set; } = new Product();
+    private async Task AddNewProduct()
+    {
+        await service.AddProductAsync(NewProduct);
+        NewProduct = new Product();
+        await RefreshProducts();
+    }
+
+    Product UpdateProduct = new Product();
+    private void SetProductForUpdate(Product product)
+    {
+        UpdateProduct = product;
+    }
+
+    private async Task UpdateProductData()
+    {
+        await service.UpdateProductAsync(UpdateProduct);
+        await RefreshProducts();
+    }
+
+    private async Task DeleteProduct(Product product)
+    {
+        await service.DeleteProductAsync(product);
+        await RefreshProducts();
+    }
+}
