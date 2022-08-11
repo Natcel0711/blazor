@@ -86,53 +86,6 @@
     </div>
     , new DialogOptions() { CloseDialogOnOverlayClick = true });
     }
-    async Task UpdateDialog(Product product)
-    {
-        SetProductForUpdate(product);
-        await DialogService.OpenAsync("Add Product", ds =>
-    @<div>
-        <RadzenFieldset Text=" ">
-            <div class="row mb-3">
-                <div class="col-md-4 align-items-center d-flex">
-                    <RadzenLabel Text="Name" />
-                </div>
-                <div class="col-md-8">
-                    <RadzenTextBox @bind-Value=UpdateProduct.Name style="width: 100%;" Name="Name" />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-4 align-items-center d-flex">
-                    <RadzenLabel Text="Price" />
-                </div>
-                <div class="col-md-8">
-                    <RadzenNumeric @bind-Value=UpdateProduct.Price TValue="double" Class="w-100" />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-4 align-items-center d-flex">
-                    <RadzenLabel Text="Description" />
-                </div>
-                <div class="col-md-8">
-                    <RadzenTextArea @bind-Value=UpdateProduct.Description Class="w-100" />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-4 align-items-center d-flex">
-                    <RadzenLabel Text="Quantity" />
-                </div>
-                <div class="col-md-8">
-                    <RadzenNumeric @bind-Value=UpdateProduct.Quantity TValue="int" Class="w-100" />
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class=" align-items-center d-flex">
-                    <RadzenButton style="width: 160px; background-color: rgb(64 64 64);" Icon="save" BusyText="Saving ..." IsBusy=@busy Click=@UpdateProductData Text="Save" />
-                </div>
-            </div>
-        </RadzenFieldset>
-    </div>
-    , new DialogOptions() { CloseDialogOnOverlayClick = true });
-    }
     private async Task RefreshProducts()
     {
         products = await service.GetProductAsync();
