@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddDbContext<ProductDBContext>(options =>
 {
     options.UseSqlite("Data Source = Products.db");
